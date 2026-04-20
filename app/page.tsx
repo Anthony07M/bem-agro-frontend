@@ -5,9 +5,15 @@ import dynamic from "next/dynamic";
 import { AlertCircle, CloudSun } from "lucide-react";
 import { SearchInput } from "@/components/SearchInput";
 import { WeatherCard } from "@/components/WeatherCard";
+import { HourlyForecastCard } from "@/components/HourlyForecastCard";
 import { HistoryTable } from "@/components/HistoryTable";
-import { ApiError, getHistory, getWeather } from "@/services/api";
-import type { HistoryEntry, Weather } from "@/lib/types";
+import {
+  ApiError,
+  getHistory,
+  getHourlyForecast,
+  getWeather,
+} from "@/services/api";
+import type { ForecastItem, HistoryEntry, Weather } from "@/lib/types";
 
 const MapViewer = dynamic(
   () => import("@/components/MapViewer").then((m) => m.MapViewer),
@@ -24,6 +30,7 @@ const MapViewer = dynamic(
 export default function Home() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState<Weather | null>(null);
+  const [forecast, setForecast] = useState<ForecastItem[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +40,6 @@ export default function Home() {
       const items = await getHistory();
       setHistory(items);
     } catch {
-      // Histórico é não-crítico; manter silencioso para não sobrescrever o erro da busca.
     }
   }, []);
 
@@ -49,8 +55,15 @@ export default function Home() {
       setLoading(true);
       setError(null);
       try {
-        const result = await getWeather(trimmed);
-        setWeather(result);
+        debugger
+        const [weatherResult, forecastResult] = await Promise.all([
+          getWeather(trimmed),
+          getHourlyForecast(trimmed).catch(() => [] as ForecastItem[]),
+        ]);
+        debugger
+        setWeather(weatherResult);
+        setForecast(forecastResult);
+        debugger
         await refreshHistory();
       } catch (err) {
         const message =
@@ -96,10 +109,11 @@ export default function Home() {
           ) : (
             <EmptyWeather loading={loading} />
           )}
+          {forecast.length > 0 ? <HourlyForecastCard items={forecast} /> : null}
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="min-h-96">
+          <div className="flex-1 min-h-96">
             <MapViewer
               latitude={weather?.latitude ?? null}
               longitude={weather?.longitude ?? null}

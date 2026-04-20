@@ -10,6 +10,14 @@ export interface Weather {
   observedAt: string;
 }
 
+export interface ForecastItem {
+  time: string;
+  temperature: number;
+  icon: string;
+  description: string;
+  pop: number;
+}
+
 export interface HistoryEntry {
   id: string | number;
   city: string;

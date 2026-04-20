@@ -1,4 +1,4 @@
-import type { HistoryEntry, Weather } from "@/lib/types";
+import type { ForecastItem, HistoryEntry, Weather } from "@/lib/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
@@ -83,6 +83,32 @@ export async function getWeather(city: string): Promise<Weather> {
     longitude: dto.longitude,
     observedAt: new Date().toISOString(),
   };
+}
+
+interface ForecastItemDTO {
+  time: string;
+  temperature: number;
+  icon: string;
+  description: string;
+  pop: number;
+}
+
+interface ForecastResponseDTO {
+  forecast: ForecastItemDTO[];
+}
+
+export async function getHourlyForecast(city: string): Promise<ForecastItem[]> {
+  const dto = await request<ForecastResponseDTO>(
+    `/api/forecast?city=${encodeURIComponent(city)}`,
+  );
+
+  return dto.forecast.map((item) => ({
+    time: item.time,
+    temperature: item.temperature,
+    icon: item.icon,
+    description: item.description,
+    pop: item.pop,
+  }));
 }
 
 export async function getHistory(): Promise<HistoryEntry[]> {

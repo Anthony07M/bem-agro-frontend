@@ -24,3 +24,10 @@ body {
   background: var(--color-surface-muted);
   color: var(--color-ink);
 }
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
