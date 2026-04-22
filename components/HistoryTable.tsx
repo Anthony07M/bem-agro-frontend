@@ -39,7 +39,7 @@ export function HistoryTable({
   const showPagination = sorted.length > pageSize;
 
   return (
-    <section className="rounded-3xl bg-surface p-6 shadow-sm sm:p-8">
+    <section className="rounded-3xl bg-surface p-4 shadow-sm sm:p-6 lg:p-8">
       <header className="flex items-center justify-between gap-4">
         <h2 className="font-headline text-lg font-bold text-ink">
           Histórico de consultas
@@ -59,11 +59,11 @@ export function HistoryTable({
             <table className="w-full text-left text-sm">
               <thead className="text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
                 <tr>
-                  <th scope="col" className="py-3 pr-4 font-semibold">Cidade</th>
-                  <th scope="col" className="py-3 pr-4 font-semibold">Latitude</th>
-                  <th scope="col" className="py-3 pr-4 font-semibold">Longitude</th>
-                  <th scope="col" className="py-3 pr-4 font-semibold">Data / Hora</th>
-                  <th scope="col" className="py-3 pr-2 font-semibold">
+                  <th scope="col" className="py-3 pr-3 font-semibold sm:pr-4">Cidade</th>
+                  <th scope="col" className="hidden py-3 pr-3 font-semibold md:table-cell md:pr-4">Latitude</th>
+                  <th scope="col" className="hidden py-3 pr-3 font-semibold md:table-cell md:pr-4">Longitude</th>
+                  <th scope="col" className="py-3 pr-3 font-semibold sm:pr-4">Data / Hora</th>
+                  <th scope="col" className="py-3 pr-1 font-semibold sm:pr-2">
                     <span className="sr-only">Ação</span>
                   </th>
                 </tr>
@@ -93,26 +93,31 @@ export function HistoryTable({
                           : undefined
                       }
                     >
-                      <td className="py-3 pr-4">
-                        <span className="inline-flex items-center gap-3">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-soft text-primary">
+                      <td className="py-3 pr-3 sm:pr-4">
+                        <span className="inline-flex items-center gap-2 sm:gap-3">
+                          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-secondary-soft text-primary">
                             <MapPin className="h-4 w-4" aria-hidden="true" />
                           </span>
-                          <span className="font-medium text-ink">{entry.city}</span>
+                          <span className="flex min-w-0 flex-col">
+                            <span className="truncate font-medium text-ink">{entry.city}</span>
+                            <span className="truncate text-[11px] tabular-nums text-ink-muted md:hidden">
+                              {entry.latitude.toFixed(2)}, {entry.longitude.toFixed(2)}
+                            </span>
+                          </span>
                         </span>
                       </td>
-                      <td className="py-3 pr-4 tabular-nums text-ink-muted">
+                      <td className="hidden py-3 pr-3 tabular-nums text-ink-muted md:table-cell md:pr-4">
                         {entry.latitude.toFixed(4)}
                       </td>
-                      <td className="py-3 pr-4 tabular-nums text-ink-muted">
+                      <td className="hidden py-3 pr-3 tabular-nums text-ink-muted md:table-cell md:pr-4">
                         {entry.longitude.toFixed(4)}
                       </td>
-                      <td className="py-3 pr-4 text-ink-muted">
+                      <td className="whitespace-nowrap py-3 pr-3 text-ink-muted sm:pr-4">
                         {format(new Date(entry.consultedAt), "dd MMM, HH:mm", {
                           locale: ptBR,
                         })}
                       </td>
-                      <td className="py-3 pr-2 text-ink-muted">
+                      <td className="py-3 pr-1 text-ink-muted sm:pr-2">
                         {clickable ? (
                           <ChevronRight className="h-4 w-4" aria-hidden="true" />
                         ) : null}
@@ -127,7 +132,7 @@ export function HistoryTable({
           {showPagination ? (
             <nav
               aria-label="Paginação do histórico"
-              className="mt-4 flex items-center justify-end gap-3 text-sm text-ink-muted"
+              className="mt-4 flex flex-wrap items-center justify-end gap-2 text-sm text-ink-muted sm:gap-3"
             >
               <span>
                 Página {currentPage} de {totalPages}

@@ -20,7 +20,7 @@ const MapViewer = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full min-h-80 items-center justify-center rounded-3xl bg-surface shadow-sm">
+      <div className="flex h-full min-h-72 items-center justify-center rounded-3xl bg-surface shadow-sm sm:min-h-80">
         <p className="text-sm text-ink-muted">Carregando mapa...</p>
       </div>
     ),
@@ -84,7 +84,7 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-8 sm:px-8 sm:py-12 xl:px-12">
+    <main className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-3 py-6 sm:gap-6 sm:px-8 sm:py-12 xl:px-12">
       <SearchInput
         value={query}
         onChange={setQuery}
@@ -102,8 +102,8 @@ export default function Home() {
         </div>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
+      <div className="grid gap-4 sm:gap-6 xl:grid-cols-2">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {weather ? (
             <WeatherCard data={weather} />
           ) : (
@@ -112,8 +112,8 @@ export default function Home() {
           {forecast.length > 0 ? <HourlyForecastCard items={forecast} /> : null}
         </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="flex-1 min-h-96">
+        <div className="flex flex-col gap-4 sm:gap-6">
+          <div className="flex-1 min-h-72 sm:min-h-96">
             <MapViewer
               latitude={weather?.latitude ?? null}
               longitude={weather?.longitude ?? null}
@@ -129,7 +129,7 @@ export default function Home() {
 
 function EmptyWeather({ loading }: { loading: boolean }) {
   return (
-    <div className="flex flex-col items-start gap-3 rounded-3xl bg-surface p-8 shadow-sm">
+    <div className="flex flex-col items-start gap-3 rounded-3xl bg-surface p-5 shadow-sm sm:p-8">
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary-soft text-primary">
         <CloudSun className="h-5 w-5" aria-hidden="true" />
       </span>

@@ -21,11 +21,11 @@ export function HourlyForecastCard({ items }: HourlyForecastCardProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="rounded-3xl bg-surface p-6 shadow-sm">
+    <section className="rounded-3xl bg-surface p-4 shadow-sm sm:p-6">
       <h3 className="mb-4 font-headline text-sm font-semibold uppercase tracking-wide text-ink-muted">
         Próximas 24 horas
       </h3>
-      <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+      <div className="flex gap-3 overflow-x-auto scrollbar-hide sm:gap-4">
         {items.map((item) => {
           const Icon = pickIcon(item.icon);
           const parsedTime = parseTime(item.time);
@@ -34,7 +34,7 @@ export function HourlyForecastCard({ items }: HourlyForecastCardProps) {
           return (
             <div
               key={item.time}
-              className="flex min-w-20 flex-col items-center gap-2 rounded-2xl bg-surface-muted px-4 py-3"
+              className="flex min-w-16 shrink-0 flex-col items-center gap-2 rounded-2xl bg-surface-muted px-3 py-3 sm:min-w-20 sm:px-4"
             >
               <span className="text-xs font-semibold text-ink-muted">
                 {hour}

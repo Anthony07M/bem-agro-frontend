@@ -32,7 +32,7 @@ export function SearchInput({
       onSubmit={handleSubmit}
       className="flex items-center gap-2 rounded-2xl border border-border bg-surface px-2 py-2 shadow-sm transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20"
     >
-      <label className="flex flex-1 items-center gap-3 px-3">
+      <label className="flex min-w-0 flex-1 items-center gap-2 px-2 sm:gap-3 sm:px-3">
         <MapPin className="h-5 w-5 shrink-0 text-ink" aria-hidden="true" />
         <span className="sr-only">Cidade</span>
         <input
@@ -49,14 +49,14 @@ export function SearchInput({
         type="submit"
         disabled={disabled}
         aria-label="Consultar previsão"
-        className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-10 shrink-0 items-center gap-2 rounded-xl bg-primary px-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60 sm:px-4"
       >
         {loading ? (
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
         ) : (
           <Search className="h-4 w-4" aria-hidden="true" />
         )}
-        <span>Consultar</span>
+        <span className="hidden sm:inline">Consultar</span>
       </button>
     </form>
   );

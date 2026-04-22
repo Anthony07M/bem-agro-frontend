@@ -33,7 +33,7 @@ export function MapViewer({ latitude, longitude, label }: MapViewerProps) {
 
   if (!token) {
     return (
-      <div className="flex h-full min-h-96 flex-col items-center justify-center gap-2 rounded-3xl border border-dashed border-border bg-surface p-6 text-center">
+      <div className="flex h-full min-h-72 flex-col items-center justify-center gap-2 rounded-3xl border border-dashed border-border bg-surface p-6 text-center sm:min-h-96">
         <p className="font-headline text-base font-semibold text-ink">
           Mapbox indisponível
         </p>
@@ -45,7 +45,7 @@ export function MapViewer({ latitude, longitude, label }: MapViewerProps) {
   }
 
   return (
-    <div className="relative h-full min-h-96 overflow-hidden rounded-3xl shadow-sm">
+    <div className="relative h-full min-h-72 overflow-hidden rounded-3xl shadow-sm sm:min-h-96">
       <Map
         ref={mapRef}
         mapboxAccessToken={token}
